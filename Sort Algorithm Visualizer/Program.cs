@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sort_Algorithm_Visualizer
 {
-    static class Program
+    public static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
+        {
+            InitializeApplication();
+        }
+
+        private static void InitializeApplication()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
