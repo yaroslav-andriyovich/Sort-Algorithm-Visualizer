@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Code;
+using Sort_Algorithm_Visualizer.Code.HUD;
 
 namespace Sort_Algorithm_Visualizer
 {
@@ -15,14 +16,13 @@ namespace Sort_Algorithm_Visualizer
             _panelController = new PanelController(panel);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) => 
             Close();
 
         private void btnReset_Click(object sender, EventArgs e) => 
             _panelController.Reset();
+
+        private void btnStart_Click(object sender, EventArgs e) => 
+            _panelController.Start();
     }
 }
