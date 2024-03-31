@@ -1,18 +1,21 @@
 using System.Threading.Tasks;
+using Sort_Algorithm_Visualizer.Code.UI;
 
 namespace Sort_Algorithm_Visualizer.Code.Algorithms
 {
     public class BubbleSort : ISortAlgorithm
     {
         private readonly int[] _data;
+        private readonly Delay _delay;
         private readonly SwapCallback _swapCallback;
         private int LastIndex => _data.Length - 1;
 
         private int _passCount;
 
-        public BubbleSort(int[] data, SwapCallback swapCallback)
+        public BubbleSort(int[] data, Delay delay, SwapCallback swapCallback)
         {
             _data = data;
+            _delay = delay;
             _swapCallback = swapCallback;
         }
 
@@ -30,7 +33,7 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
                     _swapCallback?.Invoke(firstIndex, secondIndex);
                 }
 
-                await Task.Delay(Settings.Instance.Delay);
+                await Task.Delay(_delay.Value);
             }
 
             ++_passCount;

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Sort_Algorithm_Visualizer.Code.UI;
 
 namespace Sort_Algorithm_Visualizer.Code.Algorithms
 {
@@ -11,13 +12,17 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         public bool IsRunning => _backgroundWorker != null && !_backgroundWorker.CancellationPending;
 
         private readonly AlgorithmFactory _algorithmFactory;
-        
+        private readonly Delay _delay;
+
         private ISortAlgorithm _sortAlgorithm;
         private BackgroundWorker _backgroundWorker;
         private int[] _data;
 
-        public AlgorithmController(AlgorithmFactory algorithmFactory) => 
+        public AlgorithmController(AlgorithmFactory algorithmFactory, Delay delay)
+        {
             _algorithmFactory = algorithmFactory;
+            _delay = delay;
+        }
 
         public void SetData(int[] data) => 
             _data = data;
@@ -27,7 +32,7 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
             if (IsRunning)
                 return;
             
-            ChangeAlgorithm(sortingType, swapCallback);
+            ChangeSortType(sortingType, swapCallback);
             RunSortingThread();
             Started?.Invoke();
         }
@@ -41,16 +46,16 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
             }
         }
 
-        private void ChangeAlgorithm(SortAlgorithmType sortingType, SwapCallback swapCallback)
+        private void ChangeSortType(SortAlgorithmType sortingType, SwapCallback swapCallback)
         {
             switch (sortingType)
             {
                 case SortAlgorithmType.BubbleSort:
-                    _sortAlgorithm = _algorithmFactory.CreateBubble(_data, swapCallback);
+                    _sortAlgorithm = _algorithmFactory.CreateBubble(_data, _delay, swapCallback);
                     break;
 
                 default:
-                    throw new InvalidOperationException("Unknown algorithm selected!");
+                    throw new InvalidOperationException("Unknown sort algorithm type selected!");
             }
         }
 
@@ -67,11 +72,15 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
             while (!_sortAlgorithm.IsSorted() && IsRunning)
             {
                 await _sortAlgorithm.NextStep();
-                await Task.Delay(Settings.Instance.Delay);
+                await Task.Delay(_delay.Value);
             }
 
             Finished?.Invoke();
+            ClearBackgroundWorker();
         }
+
+        private void ClearBackgroundWorker() => 
+            _backgroundWorker = null;
     }
     
     public delegate void SwapCallback(int firstIndex, int secondIndex);

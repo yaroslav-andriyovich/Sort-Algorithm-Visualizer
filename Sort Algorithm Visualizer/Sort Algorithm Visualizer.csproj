@@ -54,11 +54,10 @@
     <Compile Include="Code\Data\NumericDataGenerator.cs" />
     <Compile Include="Code\UI\AlgorithmSelection.cs" />
     <Compile Include="Code\UI\ChartView.cs" />
-    <Compile Include="Code\UI\DelayController.cs" />
+    <Compile Include="Code\UI\Delay.cs" />
     <Compile Include="Code\UI\ResetFeature.cs" />
     <Compile Include="Code\UI\StartFeature.cs" />
     <Compile Include="Code\UI\StopFeature.cs" />
-    <Compile Include="Code\Settings.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
