@@ -1,9 +1,11 @@
-using System.Drawing;
+using System;
+using System.Threading.Tasks;
 
 namespace Sort_Algorithm_Visualizer.Code.Algorithms
 {
     public interface ISortAlgorithm
     {
-        void Sort(int[] data, Graphics graphics, int maxGraphicsHeight);
+        Task NextStep();
+        bool IsSorted();
     }
 }
