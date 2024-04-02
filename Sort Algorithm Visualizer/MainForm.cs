@@ -7,13 +7,13 @@ namespace Sort_Algorithm_Visualizer
 {
     public partial class MainForm : Form
     {
-        private readonly ChartView _chartView;
-        private readonly ResetFeature _resetFeature;
-        private readonly StartFeature _startFeature;
-        private readonly StopFeature _stopFeature;
         private readonly Delay _delay;
         private readonly AlgorithmController _algorithmController;
+        private readonly ChartView _chartView;
+        private readonly ResetFeature _resetFeature;
         private readonly AlgorithmSelection _algorithmSelection;
+        private readonly StartFeature _startFeature;
+        private readonly StopFeature _stopFeature;
 
         public MainForm()
         {

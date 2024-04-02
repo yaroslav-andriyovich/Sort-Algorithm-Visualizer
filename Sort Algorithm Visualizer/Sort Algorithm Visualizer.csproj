@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Algorithms\BubbleSort.cs" />
+    <Compile Include="Code\Algorithms\InsertionSort.cs" />
     <Compile Include="Code\Algorithms\ISortAlgorithm.cs" />
     <Compile Include="Code\Algorithms\AlgorithmController.cs" />
     <Compile Include="Code\Algorithms\AlgorithmFactory.cs" />

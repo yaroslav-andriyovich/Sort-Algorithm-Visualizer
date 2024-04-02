@@ -50,8 +50,12 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         {
             switch (sortingType)
             {
-                case SortAlgorithmType.BubbleSort:
+                case SortAlgorithmType.Bubble:
                     _sortAlgorithm = _algorithmFactory.CreateBubble(_data, _delay, swapCallback);
+                    break;
+                
+                case SortAlgorithmType.Insertion:
+                    _sortAlgorithm = _algorithmFactory.CreateInsertion(_data, _delay, swapCallback);
                     break;
 
                 default:
@@ -71,10 +75,10 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         {
             while (!_sortAlgorithm.IsSorted() && IsRunning)
             {
-                await _sortAlgorithm.NextStep();
+                await _sortAlgorithm.NextPass();
                 await Task.Delay(_delay.Value);
             }
-
+            
             Finished?.Invoke();
             ClearBackgroundWorker();
         }

@@ -29,8 +29,8 @@ namespace Sort_Algorithm_Visualizer.Code.UI
 
         private void AddMenuItems()
         {
-            _dropdownMenu.Items.Add(SortAlgorithmType.BubbleSort);
-            _dropdownMenu.Items.Add(SortAlgorithmType.BubbleSort);
+            _dropdownMenu.Items.Add(SortAlgorithmType.Bubble);
+            _dropdownMenu.Items.Add(SortAlgorithmType.Insertion);
         }
     }
 }

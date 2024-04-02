@@ -10,7 +10,7 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         private readonly SwapCallback _swapCallback;
         private int LastIndex => _data.Length - 1;
 
-        private int _passCount;
+        private int _passNumber;
 
         public BubbleSort(int[] data, Delay delay, SwapCallback swapCallback)
         {
@@ -19,28 +19,25 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
             _swapCallback = swapCallback;
         }
 
-        public async Task NextStep()
+        public async Task NextPass()
         {
-            for (int i = 0; i < LastIndex - _passCount; i++)
+            for (int i = 0; i < LastIndex - _passNumber; i++)
             {
                 int firstIndex = i;
                 int secondIndex = i + 1;
                 bool leftNumGreaterThanRight = _data[firstIndex] > _data[secondIndex]; 
                 
                 if (leftNumGreaterThanRight)
-                {
                     Swap(firstIndex, secondIndex);
-                    _swapCallback?.Invoke(firstIndex, secondIndex);
-                }
 
                 await Task.Delay(_delay.Value);
             }
 
-            ++_passCount;
+            ++_passNumber;
         }
 
         public bool IsSorted() => 
-            LastIndex < _passCount;
+            LastIndex < _passNumber;
 
         private void Swap(int firstIndex, int secondIndex)
         {
@@ -48,6 +45,8 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
 
             _data[firstIndex] = _data[secondIndex];
             _data[secondIndex] = temp;
+            
+            _swapCallback?.Invoke(firstIndex, secondIndex);
         }
     }
 }
