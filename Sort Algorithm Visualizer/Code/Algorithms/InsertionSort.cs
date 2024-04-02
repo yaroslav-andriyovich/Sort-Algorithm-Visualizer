@@ -3,69 +3,53 @@ using Sort_Algorithm_Visualizer.Code.UI;
 
 namespace Sort_Algorithm_Visualizer.Code.Algorithms
 {
-    public class InsertionSort : ISortAlgorithm
+    public class InsertionSort : SortAlgorithmBase
     {
-        private readonly int[] _data;
-        private readonly Delay _delay;
-        private readonly SwapCallback _swapCallback;
-        private int ElementsCount => _data.Length;
-        private int PrevIndex => _currentIndex - 1;
-        private int PrevElement => _data[PrevIndex];
+        private int ElementsNumber => _data.Length;
+        private int PrevIndex => _targetIndex - 1;
+        private int PrevNumber => _data[PrevIndex];
 
-        private int _currentIndex;
-        private int _currentElement;
+        private int _targetIndex;
+        private int _targetNumber;
         private int _passNumber;
-
-        public InsertionSort(int[] data, Delay delay, SwapCallback swapCallback)
+    
+        public InsertionSort(int[] data, Delay delay, SwapCallback swapCallback) 
+            : base(data, delay, swapCallback)
         {
-            _data = data;
-            _delay = delay;
-            _swapCallback = swapCallback;
         }
 
-        public async Task NextPass()
+        public override async Task NextPass()
         {
-            MoveToTargetIndex();
-            CacheTargetElement();
+            SetTargetIndex();
+            CacheTargetNumber();
 
-            while (CanMoveLeft())
+            while (TargetNumberIsSmallerThanPrevious())
             {
-                Insert(PrevIndex, _currentIndex);
-                DecrementCurrentIndex();
-                
+                Swap(PrevIndex, _targetIndex);
+                DecrementTargetIndex();
+
                 await Task.Delay(_delay.Value);
             }
 
-            InsertElement();
             IncrementPassNumber();
         }
 
-        private bool CanMoveLeft() => 
-            _currentIndex > 0 && _currentElement < PrevElement;
+        public override bool IsSorted() => 
+            ElementsNumber <= _passNumber;
 
-        private void MoveToTargetIndex() => 
-            _currentIndex = _passNumber;
+        private void SetTargetIndex() => 
+            _targetIndex = _passNumber;
 
-        private void CacheTargetElement() => 
-            _currentElement = _data[_passNumber];
+        private void CacheTargetNumber() => 
+            _targetNumber = _data[_targetIndex];
 
-        private void DecrementCurrentIndex() => 
-            _currentIndex--;
+        private bool TargetNumberIsSmallerThanPrevious() => 
+            _targetIndex > 0 && _targetNumber < PrevNumber;
 
-        private void InsertElement() => 
-            _data[_currentIndex] = _currentElement;
+        private void DecrementTargetIndex() => 
+            _targetIndex--;
 
         private void IncrementPassNumber() => 
             ++_passNumber;
-
-        public bool IsSorted() => 
-            ElementsCount <= _passNumber;
-
-        private void Insert(int targetIndex, int indexToReplace)
-        {
-            _data[indexToReplace] = _data[targetIndex];
-                
-            _swapCallback?.Invoke(targetIndex, indexToReplace);
-        }
     }
 }

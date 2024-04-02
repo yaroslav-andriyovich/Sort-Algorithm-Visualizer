@@ -52,6 +52,7 @@
     <Compile Include="Code\Algorithms\ISortAlgorithm.cs" />
     <Compile Include="Code\Algorithms\AlgorithmController.cs" />
     <Compile Include="Code\Algorithms\AlgorithmFactory.cs" />
+    <Compile Include="Code\Algorithms\SortAlgorithmBase.cs" />
     <Compile Include="Code\Data\NumericDataGenerator.cs" />
     <Compile Include="Code\UI\AlgorithmSelection.cs" />
     <Compile Include="Code\UI\ChartView.cs" />

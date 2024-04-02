@@ -25,13 +25,12 @@ namespace Sort_Algorithm_Visualizer.Code.UI
 
             for (int i = 0; i < elementsCount; i++)
             {
-                DataPoint dataPoint = new DataPoint(i, data[i]);
-                float colorIntensity = data[i] / (float)maxElementValue;
-                int brightness = (int)(255f * colorIntensity);
-                Color color = Color.FromArgb(brightness, brightness, brightness);
+                int dataValue = data[i];
+                DataPoint dataPoint = new DataPoint(i, dataValue);
+                Color color = GetPointColor(maxElementValue, dataValue);
 
                 dataPoint.Color = color;
-
+                
                 _points.Add(dataPoint);
             }
         }
@@ -41,20 +40,39 @@ namespace Sort_Algorithm_Visualizer.Code.UI
 
         private void Clear() => 
             _points.Clear();
+        
+        private Color GetPointColor(int maxElementValue, int dataValue)
+        {
+            /*int red = 125;
+            int green = 0;
+            int blue = 255;*/
+            
+            int red = 255;
+            int green = 255;
+            int blue = 255;
+            
+            float colorIntensity = dataValue / (float)maxElementValue;
+            
+            red = (int)(red * colorIntensity);
+            green = (int)(green * colorIntensity);
+            blue = (int)(blue * colorIntensity);
+            
+            Color color = Color.FromArgb(red, green, blue);
+            
+            return color;
+        }
 
         private void SwapPoints(int firstIndex, int secondIndex)
         {
-            Series series = _chart.Series[0];
+            double firstX = _points[firstIndex].XValue;
+            double firstY = _points[firstIndex].YValues[0];
+            Color firstColor = _points[firstIndex].Color;
 
-            double firstX = series.Points[firstIndex].XValue;
-            double firstY = series.Points[firstIndex].YValues[0];
-            Color firstColor = series.Points[firstIndex].Color;
+            _points[firstIndex].SetValueXY(_points[secondIndex].XValue, _points[secondIndex].YValues[0]);
+            _points[firstIndex].Color = _points[secondIndex].Color;
 
-            series.Points[firstIndex].SetValueXY(series.Points[secondIndex].XValue, series.Points[secondIndex].YValues[0]);
-            series.Points[firstIndex].Color = series.Points[secondIndex].Color;
-
-            series.Points[secondIndex].SetValueXY(firstX, firstY);
-            series.Points[secondIndex].Color = firstColor;
+            _points[secondIndex].SetValueXY(firstX, firstY);
+            _points[secondIndex].Color = firstColor;
         }
     }
 }
