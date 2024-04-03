@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Sort_Algorithm_Visualizer.Code.UI;
+using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Code.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms
 {
     public class InsertionSort : SortAlgorithmBase
     {
@@ -12,9 +12,9 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         private int _targetIndex;
         private int _targetNumber;
         private int _passNumber;
-    
-        public InsertionSort(int[] data, Delay delay, SwapCallback swapCallback) 
-            : base(data, delay, swapCallback)
+        
+        public InsertionSort(AlgorithmParameters parameters) 
+            : base(parameters)
         {
         }
 
@@ -23,12 +23,20 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
             SetTargetIndex();
             CacheTargetNumber();
 
-            while (TargetNumberIsSmallerThanPrevious())
+            while (TargetIndexInRange())
             {
+                if (IsCanceled())
+                    return;
+                
+                await ReportSelected(PrevIndex, _targetIndex);
+
+                if (!TargetNumberIsSmallerThanPrevious())
+                    break;
+
                 Swap(PrevIndex, _targetIndex);
                 DecrementTargetIndex();
 
-                await Task.Delay(_delay.Value);
+                await PassDelay();
             }
 
             IncrementPassNumber();
@@ -43,8 +51,11 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         private void CacheTargetNumber() => 
             _targetNumber = _data[_targetIndex];
 
+        private bool TargetIndexInRange() => 
+            _targetIndex > 0 && _targetIndex < _data.Length;
+        
         private bool TargetNumberIsSmallerThanPrevious() => 
-            _targetIndex > 0 && _targetNumber < PrevNumber;
+            _targetNumber < PrevNumber;
 
         private void DecrementTargetIndex() => 
             _targetIndex--;

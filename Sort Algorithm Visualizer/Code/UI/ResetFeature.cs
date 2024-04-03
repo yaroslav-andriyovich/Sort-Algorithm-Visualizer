@@ -1,9 +1,10 @@
 using System;
 using System.Windows.Forms;
-using Sort_Algorithm_Visualizer.Code.Algorithms;
-using Sort_Algorithm_Visualizer.Code.Data;
+using Sort_Algorithm_Visualizer.Algorithms;
+using Sort_Algorithm_Visualizer.Data;
+using Sort_Algorithm_Visualizer.UI.ChartControl;
 
-namespace Sort_Algorithm_Visualizer.Code.UI
+namespace Sort_Algorithm_Visualizer.UI
 {
     public class ResetFeature
     {
@@ -12,13 +13,15 @@ namespace Sort_Algorithm_Visualizer.Code.UI
         private readonly ChartView _chartView;
         private readonly NumericDataGenerator _dataGenerator;
         private readonly AlgorithmController _algorithmController;
+        private readonly ArraySizeChanger _arraySizeChanger;
 
         public ResetFeature(
             Button resetButton, 
             Button startButton, 
             ChartView chartView, 
             NumericDataGenerator dataGenerator,
-            AlgorithmController algorithmController
+            AlgorithmController algorithmController,
+            ArraySizeChanger arraySizeChanger
             )
         {
             _resetButton = resetButton;
@@ -26,16 +29,19 @@ namespace Sort_Algorithm_Visualizer.Code.UI
             _chartView = chartView;
             _dataGenerator = dataGenerator;
             _algorithmController = algorithmController;
+            _arraySizeChanger = arraySizeChanger;
 
             _resetButton.Click += OnResetButtonClick;
+
+            OnResetButtonClick(null, null);
         }
-        
+
         private void OnResetButtonClick(object sender, EventArgs e)
         {
             if (_algorithmController.IsRunning)
                 return;
             
-            int elementsCount = 20;
+            int elementsCount = _arraySizeChanger.Size;
             int maxElementValue = _chartView.MaxElementValue;
             int[] data = _dataGenerator.Generate(elementsCount, maxElementValue);
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sort_Algorithm_Visualizer.Code.Data
+namespace Sort_Algorithm_Visualizer.Data
 {
     public class NumericDataGenerator
     {

@@ -1,28 +1,32 @@
 using System;
 using System.Windows.Forms;
-using Sort_Algorithm_Visualizer.Code.Algorithms;
+using Sort_Algorithm_Visualizer.Algorithms;
 
-namespace Sort_Algorithm_Visualizer.Code.UI
+namespace Sort_Algorithm_Visualizer.UI
 {
     public class StopFeature
     {
         private readonly Button _stopButton;
         private readonly AlgorithmController _algorithmController;
-        private readonly AlgorithmSelection _algorithmSelection;
+        private readonly SortingTypeSelector _sortingTypeSelector;
         private readonly Button _resetButton;
         private readonly Button _startButton;
+        private readonly NumericUpDown _arraySizeChanger;
 
         public StopFeature(Button stopButton, 
             AlgorithmController algorithmController,
-            AlgorithmSelection algorithmSelection, 
+            SortingTypeSelector sortingTypeSelector, 
             Button resetButton, 
-            Button startButton)
+            Button startButton,
+            NumericUpDown arraySizeChanger
+            )
         {
             _stopButton = stopButton;
             _algorithmController = algorithmController;
-            _algorithmSelection = algorithmSelection;
+            _sortingTypeSelector = sortingTypeSelector;
             _resetButton = resetButton;
             _startButton = startButton;
+            _arraySizeChanger = arraySizeChanger;
 
             _stopButton.Click += OnStopButtonClick;
             _algorithmController.Finished += HandleSortingFinishInMainThread;
@@ -41,9 +45,10 @@ namespace Sort_Algorithm_Visualizer.Code.UI
 
         private void EnableButtons()
         {
-            _algorithmSelection.Enabled = true;
+            _sortingTypeSelector.Enabled = true;
             _resetButton.Enabled = true;
             _startButton.Enabled = true;
+            _arraySizeChanger.Enabled = true;
         }
     }
 }

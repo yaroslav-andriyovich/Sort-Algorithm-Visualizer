@@ -1,9 +1,10 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
-using Sort_Algorithm_Visualizer.Code.UI;
+using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Code.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms
 {
     public class AlgorithmController
     {
@@ -17,6 +18,8 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         private ISortAlgorithm _sortAlgorithm;
         private BackgroundWorker _backgroundWorker;
         private int[] _data;
+        private AlgorithmParameters _parameters;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public AlgorithmController(AlgorithmFactory algorithmFactory, Delay delay)
         {
@@ -27,12 +30,12 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         public void SetData(int[] data) => 
             _data = data;
 
-        public void StartSort(SortAlgorithmType sortingType, SwapCallback swapCallback)
+        public void StartSort(SortAlgorithmType sortingType, SelectedCallback selectedCallback, SwapCallback swapCallback)
         {
             if (IsRunning)
                 return;
             
-            ChangeSortType(sortingType, swapCallback);
+            ChangeSortType(sortingType, selectedCallback, swapCallback);
             RunSortingThread();
             Started?.Invoke();
         }
@@ -41,21 +44,33 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         {
             if (IsRunning)
             {
+                _cancellationTokenSource.Cancel();
                 _backgroundWorker.CancelAsync();
                 Finished?.Invoke();
             }
         }
 
-        private void ChangeSortType(SortAlgorithmType sortingType, SwapCallback swapCallback)
+        private void ChangeSortType(SortAlgorithmType sortingType, SelectedCallback selectedCallback, SwapCallback swapCallback)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
+            
+            _parameters = new AlgorithmParameters
+            {
+                data = _data,
+                delay = _delay,
+                selectedCallback = selectedCallback,
+                swapCallback = swapCallback,
+                cancellationToken = _cancellationTokenSource.Token
+            };
+            
             switch (sortingType)
             {
                 case SortAlgorithmType.Bubble:
-                    _sortAlgorithm = _algorithmFactory.CreateBubble(_data, _delay, swapCallback);
+                    _sortAlgorithm = _algorithmFactory.CreateBubble(_parameters);
                     break;
                 
                 case SortAlgorithmType.Insertion:
-                    _sortAlgorithm = _algorithmFactory.CreateInsertion(_data, _delay, swapCallback);
+                    _sortAlgorithm = _algorithmFactory.CreateInsertion(_parameters);
                     break;
 
                 default:
@@ -75,17 +90,29 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         {
             while (!_sortAlgorithm.IsSorted() && IsRunning)
             {
-                await _sortAlgorithm.NextPass();
-                await Task.Delay(_delay.Value);
+                try
+                {
+                    await _sortAlgorithm.NextPass();
+                    await Task.Delay(_delay.Value, _cancellationTokenSource.Token);
+                }
+                catch (Exception exception)
+                {
+                    if (!(exception is TaskCanceledException))
+                        Console.WriteLine(exception);
+                }
             }
             
-            Finished?.Invoke();
+            if (_backgroundWorker != null)
+                Finished?.Invoke();
+            
             ClearBackgroundWorker();
         }
 
         private void ClearBackgroundWorker() => 
             _backgroundWorker = null;
     }
+    
+    public delegate void SelectedCallback(int firstIndex, int secondIndex);
     
     public delegate void SwapCallback(int firstIndex, int secondIndex);
 }

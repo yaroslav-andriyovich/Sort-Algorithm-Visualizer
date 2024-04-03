@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 
-namespace Sort_Algorithm_Visualizer.Code.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms
 {
     public interface ISortAlgorithm
     {
-        Task NextPass();
         bool IsSorted();
+        Task NextPass();
     }
 }

@@ -53,10 +53,16 @@
     <Compile Include="Code\Algorithms\AlgorithmController.cs" />
     <Compile Include="Code\Algorithms\AlgorithmFactory.cs" />
     <Compile Include="Code\Algorithms\SortAlgorithmBase.cs" />
+    <Compile Include="Code\Data\AlgorithmParameters.cs" />
+    <Compile Include="Code\Data\Delay.cs" />
     <Compile Include="Code\Data\NumericDataGenerator.cs" />
-    <Compile Include="Code\UI\AlgorithmSelection.cs" />
-    <Compile Include="Code\UI\ChartView.cs" />
-    <Compile Include="Code\UI\Delay.cs" />
+    <Compile Include="Code\UI\ChartControl\SelectedPoint.cs" />
+    <Compile Include="Code\UI\SortingTypeSelector.cs" />
+    <Compile Include="Code\UI\ArraySizeChanger.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartColorPicker.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartStyleSwitcher.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartView.cs" />
+    <Compile Include="Code\UI\DelayChanger.cs" />
     <Compile Include="Code\UI\ResetFeature.cs" />
     <Compile Include="Code\UI\StartFeature.cs" />
     <Compile Include="Code\UI\StopFeature.cs" />
@@ -73,17 +79,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -92,6 +99,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reset_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sort_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

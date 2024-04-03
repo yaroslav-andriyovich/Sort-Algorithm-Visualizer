@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Sort_Algorithm_Visualizer.Code.UI;
+using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Code.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms
 {
     public class BubbleSort : SortAlgorithmBase
     {
@@ -9,9 +9,9 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         private int SubPassesNumber => LastIndex - _passNumber;
 
         private int _passNumber;
-
-        public BubbleSort(int[] data, Delay delay, SwapCallback swapCallback) 
-            : base(data, delay, swapCallback)
+        
+        public BubbleSort(AlgorithmParameters parameters) 
+            : base(parameters)
         {
         }
 
@@ -19,14 +19,19 @@ namespace Sort_Algorithm_Visualizer.Code.Algorithms
         {
             for (int i = 0; i < SubPassesNumber; i++)
             {
-                int targetNumIndex = i;
-                int nextNumIndex = i + 1;
-                bool targetNumberIsGreaterThanNext = _data[targetNumIndex] > _data[nextNumIndex];
+                if (IsCanceled())
+                    return;
                 
-                if (targetNumberIsGreaterThanNext)
-                    Swap(targetNumIndex, nextNumIndex);
+                int targetIndex = i;
+                int nextIndex = i + 1;
+                bool targetNumberIsGreaterThanNext = _data[targetIndex] > _data[nextIndex];
 
-                await Task.Delay(_delay.Value);
+                await ReportSelected(targetIndex, nextIndex);
+
+                if (targetNumberIsGreaterThanNext)
+                    Swap(targetIndex, nextIndex);
+
+                await PassDelay();
             }
 
             IncrementPassNumber();

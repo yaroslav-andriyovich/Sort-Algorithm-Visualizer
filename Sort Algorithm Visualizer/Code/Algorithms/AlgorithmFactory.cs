@@ -1,14 +1,14 @@
-using Sort_Algorithm_Visualizer.Code.UI;
+using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Code.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms
 {
     public class AlgorithmFactory
     {
-        public ISortAlgorithm CreateBubble(int[] data, Delay delay, SwapCallback swapCallback) => 
-            new BubbleSort(data, delay, swapCallback);
+        public ISortAlgorithm CreateBubble(AlgorithmParameters parameters) => 
+            new BubbleSort(parameters);
         
-        public ISortAlgorithm CreateInsertion(int[] data, Delay delay, SwapCallback swapCallback) => 
-            new InsertionSort(data, delay, swapCallback);
+        public ISortAlgorithm CreateInsertion(AlgorithmParameters parameters) => 
+            new InsertionSort(parameters);
     }
 
     public enum SortAlgorithmType
