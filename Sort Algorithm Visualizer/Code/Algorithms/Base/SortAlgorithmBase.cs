@@ -20,18 +20,16 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
             _cancellationToken = parameters.cancellationToken;
         }
 
-        public abstract bool IsSorted();
+        public abstract Task Sort();
 
-        public abstract Task NextPass();
-
-        public bool IsCanceled() => 
-            _cancellationToken.IsCancellationRequested;
-        
-        protected async Task ReportSelected(int firstIndex, int secondIndex)
+        protected async Task ReportSelectedDelayed(int firstIndex, int secondIndex)
         {
-            Select?.Invoke(firstIndex, secondIndex);
+            ReportSelected(firstIndex, secondIndex);
             await PassDelay();
         }
+        
+        protected void ReportSelected(int firstIndex, int secondIndex) => 
+            Select?.Invoke(firstIndex, secondIndex);
 
         protected async Task PassDelay() => 
             await Task.Delay(_delay.Value, _cancellationToken);

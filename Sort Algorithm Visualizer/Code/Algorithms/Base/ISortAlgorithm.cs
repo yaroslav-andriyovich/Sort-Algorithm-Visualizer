@@ -6,8 +6,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
     {
         event SelectCallback Select;
         event SwapCallback Swap;
-        bool IsSorted();
-        Task NextPass();
+        Task Sort();
     }
     
     public delegate void SelectCallback(int firstIndex, int secondIndex);

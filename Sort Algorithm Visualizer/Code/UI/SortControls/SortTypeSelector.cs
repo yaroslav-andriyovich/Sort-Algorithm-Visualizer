@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Algorithms;
 
@@ -29,8 +30,8 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
 
         private void AddMenuItems()
         {
-            _dropdownMenu.Items.Add(SortAlgorithmType.Bubble);
-            _dropdownMenu.Items.Add(SortAlgorithmType.Insertion);
+            foreach (SortAlgorithmType type in Enum.GetValues(typeof(SortAlgorithmType)))
+                _dropdownMenu.Items.Add(type);
         }
     }
 }

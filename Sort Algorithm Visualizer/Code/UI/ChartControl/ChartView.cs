@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Sort_Algorithm_Visualizer.Algorithms.Base;
@@ -35,9 +36,11 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
             _finishSortingCallback = OnFinishSorting;
         }
 
-        public void InitializeGraph(int[] data, int maxElementValue)
+        public void InitializeGraph(int[] data)
         {
             Clear();
+
+            int maxElementValue = data.Max();
 
             for (int i = 0; i < data.Length; i++)
             {

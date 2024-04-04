@@ -6,42 +6,28 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 {
     public class BubbleSort : SortAlgorithmBase
     {
-        private int LastIndex => _data.Length - 1;
-        private int SubPassesNumber => LastIndex - _passNumber;
-
-        private int _passNumber;
-        
         public BubbleSort(SortingParameters parameters) 
             : base(parameters)
         {
         }
-
-        public override async Task NextPass()
+        
+        public override async Task Sort()
         {
-            for (int i = 0; i < SubPassesNumber; i++)
+            for (int i = 0; i < _data.Length - 1; i++)
             {
-                if (IsCanceled())
-                    return;
+                for (int j = 0; j < _data.Length - i - 1; j++)
+                {
+                    int currentIndex = j;
+                    int nextIndex = j + 1;
+                    
+                    await ReportSelectedDelayed(currentIndex, nextIndex);
                 
-                int targetIndex = i;
-                int nextIndex = i + 1;
-                bool targetNumberIsGreaterThanNext = _data[targetIndex] > _data[nextIndex];
+                    if (_data[currentIndex] > _data[nextIndex])
+                        SwapElements(currentIndex, nextIndex);
 
-                await ReportSelected(targetIndex, nextIndex);
-
-                if (targetNumberIsGreaterThanNext)
-                    SwapElements(targetIndex, nextIndex);
-
-                await PassDelay();
+                    await PassDelay();
+                }
             }
-
-            IncrementPassNumber();
         }
-
-        public override bool IsSorted() => 
-            LastIndex < _passNumber;
-
-        private void IncrementPassNumber() => 
-            ++_passNumber;
     }
 }

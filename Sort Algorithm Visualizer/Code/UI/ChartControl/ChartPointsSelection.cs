@@ -5,7 +5,8 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
 {
     public class ChartPointsSelection
     {
-        private static readonly Color SelectedColor = Color.Red;
+        private static readonly Color SelectedColor = Color.FromArgb(255, 50, 50);
+        private static readonly Color SwappedColor = Color.DarkOrange;
         
         private readonly DataPointCollection _points;
         
@@ -20,7 +21,7 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
         {
             Deselect();
             CachePointsData(firstIndex, secondIndex);
-            ApplySelectedColor();
+            ApplyColor(SelectedColor);
 
             _somePointsSelected = true;
         }
@@ -41,6 +42,8 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
 
                 _firstSelectedPoint.originalColor = _secondSelectedPoint.originalColor;
                 _secondSelectedPoint.originalColor = tempColor;
+                
+                ApplyColor(SwappedColor);
             }
         }
 
@@ -50,16 +53,16 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
             _secondSelectedPoint = new SelectedPoint(secondIndex, _points[secondIndex].Color);
         }
 
-        private void ApplySelectedColor()
-        {
-            _points[_firstSelectedPoint.index].Color = SelectedColor;
-            _points[_secondSelectedPoint.index].Color = SelectedColor;
-        }
-
         private void ApplyOriginalColor()
         {
             _points[_firstSelectedPoint.index].Color = _firstSelectedPoint.originalColor;
             _points[_secondSelectedPoint.index].Color = _secondSelectedPoint.originalColor;
+        }
+
+        private void ApplyColor(Color color)
+        {
+            _points[_firstSelectedPoint.index].Color = color;
+            _points[_secondSelectedPoint.index].Color = color;
         }
     }
 }

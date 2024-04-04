@@ -27,7 +27,7 @@ namespace Sort_Algorithm_Visualizer.Common
             int[] data = _dataGenerator.Generate(elementsNumber, maxElementValue);
 
             _sortingController.SetData(data);
-            _chartView.InitializeGraph(data, maxElementValue);
+            _chartView.InitializeGraph(data);
         }
     }
 }

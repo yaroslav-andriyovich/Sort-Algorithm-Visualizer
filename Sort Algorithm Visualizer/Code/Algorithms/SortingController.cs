@@ -24,7 +24,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         {
             _delay = delay;
             _algorithmFactory = new AlgorithmFactory();
-            _thread = new SortingThread(delay);
+            _thread = new SortingThread();
             _thread.StopEvent += OnAlgorithmStop;
         }
 
@@ -38,7 +38,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
             
             CreateCancellationToken();
             CreateAlgorithm(sortingType, GetSortingParameters());
-            _thread.Run(_algorithm, _cancellationTokenSource.Token);
+            _thread.Run(_algorithm);
         }
 
         public void StopSort()

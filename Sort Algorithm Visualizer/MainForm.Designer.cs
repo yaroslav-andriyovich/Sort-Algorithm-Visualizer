@@ -170,6 +170,11 @@ namespace Sort_Algorithm_Visualizer
             0});
             this.arraySizeChanger.Location = new System.Drawing.Point(277, 10);
             this.arraySizeChanger.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.arraySizeChanger.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             this.arraySizeChanger.Minimum = new decimal(new int[] {
             10,
             0,

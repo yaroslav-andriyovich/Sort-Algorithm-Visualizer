@@ -13,12 +13,18 @@ namespace Sort_Algorithm_Visualizer.Algorithms
             {
                 case SortAlgorithmType.Bubble:
                     return new BubbleSort(parameters);
+
+                case SortAlgorithmType.Selection:
+                    return new SelectionSort(parameters);
                 
                 case SortAlgorithmType.Insertion:
                     return new InsertionSort(parameters);
 
+                case SortAlgorithmType.Quick:
+                    return new QuickSort(parameters);
+
                 default:
-                    throw new InvalidOperationException("Unknown sort algorithm type selected!");
+                    throw new InvalidOperationException("Selected unknown sort type!");
             }
         }
     }
@@ -26,6 +32,8 @@ namespace Sort_Algorithm_Visualizer.Algorithms
     public enum SortAlgorithmType
     {
         Bubble,
-        Insertion
+        Selection,
+        Insertion,
+        Quick
     }
 }
