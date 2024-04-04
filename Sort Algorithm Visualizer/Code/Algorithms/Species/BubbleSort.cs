@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using Sort_Algorithm_Visualizer.Algorithms.Base;
 using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms.Species
 {
     public class BubbleSort : SortAlgorithmBase
     {
@@ -10,7 +11,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
 
         private int _passNumber;
         
-        public BubbleSort(AlgorithmParameters parameters) 
+        public BubbleSort(SortingParameters parameters) 
             : base(parameters)
         {
         }
@@ -29,7 +30,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
                 await ReportSelected(targetIndex, nextIndex);
 
                 if (targetNumberIsGreaterThanNext)
-                    Swap(targetIndex, nextIndex);
+                    SwapElements(targetIndex, nextIndex);
 
                 await PassDelay();
             }

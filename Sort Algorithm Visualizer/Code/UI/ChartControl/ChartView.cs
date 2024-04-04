@@ -1,7 +1,8 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using Sort_Algorithm_Visualizer.Algorithms;
+using Sort_Algorithm_Visualizer.Algorithms.Base;
 
 namespace Sort_Algorithm_Visualizer.UI.ChartControl
 {
@@ -10,35 +11,39 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
         public int MaxElementValue => _chart.Height;
 
         private readonly Chart _chart;
+        private readonly DataPointCollection _points;
         private readonly ChartStyleSwitcher _styleSwitcher;
         private readonly ChartColorPicker _colorPicker;
-        private readonly DataPointCollection _points;
-        private readonly SelectedCallback _selectedCallback;
+        private readonly ChartPointsSelection _pointsSelection;
+        private readonly ChartPointsSwapper _pointsSwapper;
+        private readonly SelectCallback _selectCallback;
         private readonly SwapCallback _swapCallback;
-        
-        private bool _somePointsSelected;
-        private SelectedPoint _firstSelectedPoint;
-        private SelectedPoint _secondSelectedPoint;
+        private readonly Action _finishSortingCallback;
 
         public ChartView(Chart chart, Button toggle3DButton, PictureBox colorPickBox)
         {
             _chart = chart;
+            _points = _chart.Series[0].Points;
+            
             _styleSwitcher = new ChartStyleSwitcher(chart, toggle3DButton);
             _colorPicker = new ChartColorPicker(colorPickBox);
-            _points = _chart.Series[0].Points;
-            _selectedCallback = SelectPoints;
+            _pointsSelection = new ChartPointsSelection(_points);
+            _pointsSwapper = new ChartPointsSwapper(_points);
+            
+            _selectCallback = _pointsSelection.SelectPoints;
             _swapCallback = SwapPoints;
+            _finishSortingCallback = OnFinishSorting;
         }
 
-        public void InitializeGraph(int elementsCount, int maxElementValue, int[] data)
+        public void InitializeGraph(int[] data, int maxElementValue)
         {
             Clear();
 
-            for (int i = 0; i < elementsCount; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 int dataValue = data[i];
                 DataPoint dataPoint = new DataPoint(i, dataValue);
-                Color color = GetPointColor(maxElementValue, dataValue);
+                Color color = _colorPicker.GetPointColor(dataValue, maxElementValue);
 
                 dataPoint.Color = color;
                 
@@ -46,75 +51,28 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
             }
         }
         
-        public void HandleSelectInMainThread(int firstIndex, int secondIndex) => 
-            _chart.Invoke(_selectedCallback, firstIndex, secondIndex);
+        public void SelectPointsInMainThread(int firstIndex, int secondIndex) => 
+            _chart.Invoke(_selectCallback, firstIndex, secondIndex);
 
-        public void HandleSwapInMainThread(int firstIndex, int secondIndex) => 
+        public void SwapPointsInMainThread(int firstIndex, int secondIndex) => 
             _chart.Invoke(_swapCallback, firstIndex, secondIndex);
-
+        
+        public void HandleStopSortingInMainThread() => 
+            _chart.Invoke(_finishSortingCallback);
+        
         private void Clear()
         {
-            _somePointsSelected = false;
+            _pointsSelection.Deselect();
             _points.Clear();
-        }
-
-        private Color GetPointColor(int maxElementValue, int dataValue)
-        {
-            int red = _colorPicker.Color.R;
-            int green = _colorPicker.Color.G;
-            int blue = _colorPicker.Color.B;
-            
-            float colorIntensity = dataValue / (float)maxElementValue;
-            
-            red = (int)(red * colorIntensity);
-            green = (int)(green * colorIntensity);
-            blue = (int)(blue * colorIntensity);
-            
-            Color color = Color.FromArgb(red, green, blue);
-            
-            return color;
-        }
-
-        private void SelectPoints(int firstIndex, int secondIndex)
-        {
-            if (_somePointsSelected)
-            {
-                _points[_firstSelectedPoint.index].Color = _firstSelectedPoint.color;
-                _points[_secondSelectedPoint.index].Color = _secondSelectedPoint.color;
-            }
-
-            _firstSelectedPoint = new SelectedPoint(firstIndex, _points[firstIndex].Color);
-            _secondSelectedPoint = new SelectedPoint(secondIndex, _points[secondIndex].Color);
-            
-            _points[_firstSelectedPoint.index].Color = Color.Red;
-            _points[_secondSelectedPoint.index].Color = Color.Red;
-
-            _somePointsSelected = true;
         }
         
         private void SwapPoints(int firstIndex, int secondIndex)
         {
-            double firstX = _points[firstIndex].XValue;
-            double firstY = _points[firstIndex].YValues[0];
-            Color firstColor = _points[firstIndex].Color;
-            
-            double secondX = _points[secondIndex].XValue;
-            double secondY = _points[secondIndex].YValues[0];
-            Color secondColor = _points[secondIndex].Color;
-
-            _points[firstIndex].SetValueXY(secondX, secondY);
-            _points[firstIndex].Color = secondColor;
-
-            _points[secondIndex].SetValueXY(firstX, firstY);
-            _points[secondIndex].Color = firstColor;
-            
-            if (_somePointsSelected)
-            {
-                Color temp = _firstSelectedPoint.color;
-                
-                _firstSelectedPoint.color = _secondSelectedPoint.color;
-                _secondSelectedPoint.color = temp;
-            }
+            _pointsSwapper.Swap(firstIndex, secondIndex);
+            _pointsSelection.SwapOriginalColor();
         }
+
+        private void OnFinishSorting() => 
+            _pointsSelection.Deselect();
     }
 }

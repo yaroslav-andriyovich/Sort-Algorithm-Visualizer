@@ -47,25 +47,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Algorithms\BubbleSort.cs" />
-    <Compile Include="Code\Algorithms\InsertionSort.cs" />
-    <Compile Include="Code\Algorithms\ISortAlgorithm.cs" />
-    <Compile Include="Code\Algorithms\AlgorithmController.cs" />
+    <Compile Include="Code\Algorithms\SortingController.cs" />
     <Compile Include="Code\Algorithms\AlgorithmFactory.cs" />
-    <Compile Include="Code\Algorithms\SortAlgorithmBase.cs" />
-    <Compile Include="Code\Data\AlgorithmParameters.cs" />
+    <Compile Include="Code\Algorithms\Base\ISortAlgorithm.cs" />
+    <Compile Include="Code\Algorithms\Base\SortAlgorithmBase.cs" />
+    <Compile Include="Code\Algorithms\SortingThread.cs" />
+    <Compile Include="Code\Algorithms\Species\BubbleSort.cs" />
+    <Compile Include="Code\Algorithms\Species\InsertionSort.cs" />
+    <Compile Include="Code\Common\ChartAlgorithmConnector.cs" />
+    <Compile Include="Code\Data\SortingParameters.cs" />
     <Compile Include="Code\Data\Delay.cs" />
     <Compile Include="Code\Data\NumericDataGenerator.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartPointsSelection.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartPointsSwapper.cs" />
     <Compile Include="Code\UI\ChartControl\SelectedPoint.cs" />
-    <Compile Include="Code\UI\SortingTypeSelector.cs" />
-    <Compile Include="Code\UI\ArraySizeChanger.cs" />
+    <Compile Include="Code\UI\SortControls\ArraySizeChanger.cs" />
+    <Compile Include="Code\UI\SortControls\ResetFeature.cs" />
+    <Compile Include="Code\UI\SortControls\SortDelayChanger.cs" />
     <Compile Include="Code\UI\ChartControl\ChartColorPicker.cs" />
     <Compile Include="Code\UI\ChartControl\ChartStyleSwitcher.cs" />
     <Compile Include="Code\UI\ChartControl\ChartView.cs" />
-    <Compile Include="Code\UI\DelayChanger.cs" />
-    <Compile Include="Code\UI\ResetFeature.cs" />
-    <Compile Include="Code\UI\StartFeature.cs" />
-    <Compile Include="Code\UI\StopFeature.cs" />
+    <Compile Include="Code\UI\SortControls\SortTypeSelector.cs" />
+    <Compile Include="Code\UI\SortControls\StartFeature.cs" />
+    <Compile Include="Code\UI\SortControls\StopFeature.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

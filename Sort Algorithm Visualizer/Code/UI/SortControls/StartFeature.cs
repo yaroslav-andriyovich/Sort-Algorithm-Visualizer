@@ -1,32 +1,28 @@
 using System;
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Algorithms;
-using Sort_Algorithm_Visualizer.UI.ChartControl;
 
-namespace Sort_Algorithm_Visualizer.UI
+namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
     public class StartFeature
     {
         private readonly Button _startButton;
-        private readonly AlgorithmController _algorithmController;
-        private readonly SortingTypeSelector _sortingTypeSelector;
-        private readonly ChartView _chartView;
+        private readonly SortingController _sortingController;
+        private readonly SortTypeSelector _sortTypeSelector;
         private readonly Button _resetButton;
         private readonly NumericUpDown _arraySizeChanger;
 
         public StartFeature(
             Button startButton, 
-            AlgorithmController algorithmController, 
-            SortingTypeSelector sortingTypeSelector,
-            ChartView chartView,
+            SortingController sortingController, 
+            SortTypeSelector sortTypeSelector,
             Button resetButton,
             NumericUpDown arraySizeChanger
             )
         {
             _startButton = startButton;
-            _algorithmController = algorithmController;
-            _sortingTypeSelector = sortingTypeSelector;
-            _chartView = chartView;
+            _sortingController = sortingController;
+            _sortTypeSelector = sortTypeSelector;
             _resetButton = resetButton;
             _arraySizeChanger = arraySizeChanger;
 
@@ -35,20 +31,19 @@ namespace Sort_Algorithm_Visualizer.UI
 
         private void OnStartButtonClick(object sender, EventArgs e)
         {
-            if (_algorithmController.IsRunning)
+            if (_sortingController.IsRunning)
                 return;
             
-            SortAlgorithmType sortingType = _sortingTypeSelector.GetSelected();
-            SelectedCallback selectedCallback = _chartView.HandleSelectInMainThread;
-            SwapCallback swapCallback = _chartView.HandleSwapInMainThread;
+            SortAlgorithmType sortingType = _sortTypeSelector.GetSelected();
 
-            _algorithmController.StartSort(sortingType, selectedCallback, swapCallback);
+            _sortingController.StartSorting(sortingType);
+            
             DisableButtons();
         }
         
         private void DisableButtons()
         {
-            _sortingTypeSelector.Enabled = false;
+            _sortTypeSelector.Enabled = false;
             _resetButton.Enabled = false;
             _startButton.Enabled = false;
             _arraySizeChanger.Enabled = false;

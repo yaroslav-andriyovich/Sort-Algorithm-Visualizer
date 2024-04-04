@@ -5,12 +5,12 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
     public struct SelectedPoint
     {
         public readonly int index;
-        public Color color;
+        public Color originalColor;
 
-        public SelectedPoint(int index, Color color)
+        public SelectedPoint(int index, Color originalColor)
         {
             this.index = index;
-            this.color = color;
+            this.originalColor = originalColor;
         }
     }
 }

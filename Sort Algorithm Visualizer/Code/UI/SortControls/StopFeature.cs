@@ -2,42 +2,42 @@ using System;
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Algorithms;
 
-namespace Sort_Algorithm_Visualizer.UI
+namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
     public class StopFeature
     {
         private readonly Button _stopButton;
-        private readonly AlgorithmController _algorithmController;
-        private readonly SortingTypeSelector _sortingTypeSelector;
+        private readonly SortingController _sortingController;
+        private readonly SortTypeSelector _sortTypeSelector;
         private readonly Button _resetButton;
         private readonly Button _startButton;
         private readonly NumericUpDown _arraySizeChanger;
 
         public StopFeature(Button stopButton, 
-            AlgorithmController algorithmController,
-            SortingTypeSelector sortingTypeSelector, 
+            SortingController sortingController,
+            SortTypeSelector sortTypeSelector, 
             Button resetButton, 
             Button startButton,
             NumericUpDown arraySizeChanger
             )
         {
             _stopButton = stopButton;
-            _algorithmController = algorithmController;
-            _sortingTypeSelector = sortingTypeSelector;
+            _sortingController = sortingController;
+            _sortTypeSelector = sortTypeSelector;
             _resetButton = resetButton;
             _startButton = startButton;
             _arraySizeChanger = arraySizeChanger;
 
             _stopButton.Click += OnStopButtonClick;
-            _algorithmController.Finished += HandleSortingFinishInMainThread;
+            _sortingController.Finish += HandleSortingFinishInMainThread;
         }
 
         private void OnStopButtonClick(object sender, EventArgs e)
         {
-            if (!_algorithmController.IsRunning)
+            if (!_sortingController.IsRunning)
                 return;
             
-            _algorithmController.StopSort();
+            _sortingController.StopSort();
         }
 
         private void HandleSortingFinishInMainThread() => 
@@ -45,7 +45,7 @@ namespace Sort_Algorithm_Visualizer.UI
 
         private void EnableButtons()
         {
-            _sortingTypeSelector.Enabled = true;
+            _sortTypeSelector.Enabled = true;
             _resetButton.Enabled = true;
             _startButton.Enabled = true;
             _arraySizeChanger.Enabled = true;

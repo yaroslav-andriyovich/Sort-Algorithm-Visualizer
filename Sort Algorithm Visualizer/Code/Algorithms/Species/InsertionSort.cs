@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using Sort_Algorithm_Visualizer.Algorithms.Base;
 using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.Algorithms
+namespace Sort_Algorithm_Visualizer.Algorithms.Species
 {
     public class InsertionSort : SortAlgorithmBase
     {
@@ -13,7 +14,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         private int _targetNumber;
         private int _passNumber;
         
-        public InsertionSort(AlgorithmParameters parameters) 
+        public InsertionSort(SortingParameters parameters) 
             : base(parameters)
         {
         }
@@ -33,7 +34,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
                 if (!TargetNumberIsSmallerThanPrevious())
                     break;
 
-                Swap(PrevIndex, _targetIndex);
+                SwapElements(PrevIndex, _targetIndex);
                 DecrementTargetIndex();
 
                 await PassDelay();

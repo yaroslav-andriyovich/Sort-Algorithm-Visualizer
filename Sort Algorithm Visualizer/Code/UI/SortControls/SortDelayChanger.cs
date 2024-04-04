@@ -2,24 +2,24 @@ using System;
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Data;
 
-namespace Sort_Algorithm_Visualizer.UI
+namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
-    public class DelayChanger
+    public class SortDelayChanger
     {
         private readonly NumericUpDown _numericUpDown;
         private readonly Delay _delay;
 
-        public DelayChanger(NumericUpDown numericUpDown, Delay delay)
+        public SortDelayChanger(NumericUpDown numericUpDown, Delay delay)
         {
             _numericUpDown = numericUpDown;
             _delay = delay;
 
-            _numericUpDown.ValueChanged += OnNumericUpDownChange;
+            _numericUpDown.ValueChanged += OnNumericUpDownChanged;
 
             ChangeDelay();
         }
 
-        private void OnNumericUpDownChange(object sender, EventArgs e) => 
+        private void OnNumericUpDownChanged(object sender, EventArgs e) => 
             ChangeDelay();
 
         private void ChangeDelay() => 

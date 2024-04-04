@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Sort_Algorithm_Visualizer.UI
+namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
     public class ArraySizeChanger
     {

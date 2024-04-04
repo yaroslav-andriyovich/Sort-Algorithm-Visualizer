@@ -11,20 +11,20 @@ namespace Sort_Algorithm_Visualizer.Data
         public NumericDataGenerator() => 
             _random = new Random();
 
-        public int[] Generate(int elementsCount, int maxElementValue)
+        public int[] Generate(int elementsNumber, int maxElementValue)
         {
-            CreateArray(elementsCount);
-            FillData(elementsCount, maxElementValue);
+            CreateArray(elementsNumber);
+            FillData(elementsNumber, maxElementValue);
             
             return _data;
         }
 
-        private void CreateArray(int elementsCount) => 
-            _data = new int[elementsCount];
+        private void CreateArray(int elementsNumber) => 
+            _data = new int[elementsNumber];
 
-        private void FillData(int elementsCount, int maxElementValue)
+        private void FillData(int elementsNumber, int maxElementValue)
         {
-            for (int i = 0; i < elementsCount; i++)
+            for (int i = 0; i < elementsNumber; i++)
             {
                 _data[i] = GetRandomNumber(maxElementValue);
             }

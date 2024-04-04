@@ -1,9 +1,9 @@
 using System.Windows.Forms;
 using Sort_Algorithm_Visualizer.Algorithms;
 
-namespace Sort_Algorithm_Visualizer.UI
+namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
-    public class SortingTypeSelector
+    public class SortTypeSelector
     {
         public bool Enabled
         {
@@ -13,7 +13,7 @@ namespace Sort_Algorithm_Visualizer.UI
 
         private readonly ComboBox _dropdownMenu;
 
-        public SortingTypeSelector(ComboBox dropdownMenu)
+        public SortTypeSelector(ComboBox dropdownMenu)
         {
             _dropdownMenu = dropdownMenu;
             

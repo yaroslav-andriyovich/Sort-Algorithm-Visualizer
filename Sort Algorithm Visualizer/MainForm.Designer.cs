@@ -214,11 +214,6 @@ namespace Sort_Algorithm_Visualizer
             0,
             0,
             0});
-            this.delayChanger.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.delayChanger.Name = "delayChanger";
             this.delayChanger.Size = new System.Drawing.Size(60, 20);
             this.delayChanger.TabIndex = 16;
