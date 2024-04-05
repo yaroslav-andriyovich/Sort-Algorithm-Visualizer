@@ -28,11 +28,18 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
             _arraySizeChanger = arraySizeChanger;
 
             _resetButton.Click += OnResetButtonClick;
+            _arraySizeChanger.Changed += OnArraySizeChanged;
 
-            ResetAfterInitialization();
+            Reset();
         }
 
-        private void OnResetButtonClick(object sender, EventArgs e)
+        private void OnResetButtonClick(object sender, EventArgs e) => 
+            Reset();
+
+        private void OnArraySizeChanged(int size) => 
+            Reset();
+
+        private void Reset()
         {
             if (_sortingController.IsRunning)
                 return;
@@ -40,8 +47,5 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
             _chartAlgorithmConnector.InitializeNewData(_arraySizeChanger.Size);
             _startButton.Enabled = true;
         }
-
-        private void ResetAfterInitialization() => 
-            OnResetButtonClick(null, null);
     }
 }

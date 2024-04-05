@@ -37,28 +37,21 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
             for (int j = left; j < right; j++)
             {
-                await ReportSelectedDelayed(j, right);
+                await MarkElements(j, right);
                 
                 if (_data[j] < pivot)
                 {
                     i++;
 
                     if (_data[i] != _data[j])
-                        await ReportAndSwap(i, j);
+                        await MarkAndSwap(i, j);
                 }
             }
 
             if (_data[i + 1] != pivot)
-                await ReportAndSwap(i + 1, right);
+                await MarkAndSwap(i + 1, right);
 
             return i + 1;
-        }
-
-        private async Task ReportAndSwap(int i, int j)
-        {
-            await ReportSelectedDelayed(i, j);
-            SwapElements(i, j);
-            await PassDelay();
         }
     }
 }

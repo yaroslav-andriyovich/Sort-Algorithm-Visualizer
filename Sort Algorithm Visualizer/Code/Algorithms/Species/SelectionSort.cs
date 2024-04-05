@@ -19,19 +19,14 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
                 for (int j = i + 1; j < _data.Length; j++)
                 {
-                    await ReportSelectedDelayed(minNumIndex, j);
+                    await MarkElements(minNumIndex, j);
                 
                     if (_data[j] < _data[minNumIndex])
                         minNumIndex = j;
                 }
 
                 if (minNumIndex != i)
-                {
-                    await ReportSelectedDelayed(minNumIndex, i);
-                    SwapElements(minNumIndex, i);
-                }
-
-                await PassDelay();
+                    await MarkAndSwap(minNumIndex, i);
             }
         }
     }

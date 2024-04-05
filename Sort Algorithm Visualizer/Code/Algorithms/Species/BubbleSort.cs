@@ -20,12 +20,10 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
                     int currentIndex = j;
                     int nextIndex = j + 1;
                     
-                    await ReportSelectedDelayed(currentIndex, nextIndex);
+                    await MarkElements(currentIndex, nextIndex);
                 
                     if (_data[currentIndex] > _data[nextIndex])
-                        SwapElements(currentIndex, nextIndex);
-
-                    await PassDelay();
+                        await SwapElements(currentIndex, nextIndex);
                 }
             }
         }

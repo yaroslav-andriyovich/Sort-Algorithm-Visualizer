@@ -32,8 +32,8 @@ namespace Sort_Algorithm_Visualizer
             _chartAlgorithmConnector = new ChartAlgorithmConnector(_chartView, _sortingController, new NumericDataGenerator());
             _resetFeature = new ResetFeature(resetButton, startButton, _chartAlgorithmConnector, _sortingController, _arraySizeChanger);
             _sortTypeSelector = new SortTypeSelector(comboBox);
-            _startFeature = new StartFeature(startButton, _sortingController, _sortTypeSelector, resetButton, arraySizeChanger);
-            _stopFeature = new StopFeature(stopButton, _sortingController, _sortTypeSelector, resetButton, startButton, arraySizeChanger);
+            _startFeature = new StartFeature(startButton, _sortingController, _sortTypeSelector, resetButton, arraySizeChanger, colorPickBox);
+            _stopFeature = new StopFeature(stopButton, _sortingController, _sortTypeSelector, resetButton, startButton, arraySizeChanger, colorPickBox);
         }
     }
 }

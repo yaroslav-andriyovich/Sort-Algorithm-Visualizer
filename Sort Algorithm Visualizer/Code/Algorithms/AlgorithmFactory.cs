@@ -19,6 +19,9 @@ namespace Sort_Algorithm_Visualizer.Algorithms
                 
                 case SortAlgorithmType.Insertion:
                     return new InsertionSort(parameters);
+                
+                case SortAlgorithmType.Merge:
+                    return new MergeSort(parameters);
 
                 case SortAlgorithmType.Quick:
                     return new QuickSort(parameters);
@@ -34,6 +37,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         Bubble,
         Selection,
         Insertion,
+        Merge,
         Quick
     }
 }

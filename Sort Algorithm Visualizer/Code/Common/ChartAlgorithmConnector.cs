@@ -21,10 +21,11 @@ namespace Sort_Algorithm_Visualizer.Common
             _sortingController.Finish += _chartView.HandleStopSortingInMainThread;
         }
 
-        public void InitializeNewData(int elementsNumber)
+        public void InitializeNewData(int size)
         {
-            int maxElementValue = _chartView.MaxElementValue;
-            int[] data = _dataGenerator.Generate(elementsNumber, maxElementValue);
+            const int minValue = 1;
+            int maxValue = _chartView.MaxElementValue;
+            int[] data = _dataGenerator.Generate(size, minValue, maxValue);
 
             _sortingController.SetData(data);
             _chartView.InitializeGraph(data);

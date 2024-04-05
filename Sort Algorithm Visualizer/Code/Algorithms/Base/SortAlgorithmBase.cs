@@ -6,7 +6,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
 {
     public abstract class SortAlgorithmBase : ISortAlgorithm
     {
-        public event SelectCallback Select;
+        public event MarkCallback Mark;
         public event SwapCallback Swap;
 
         protected readonly int[] _data;
@@ -22,26 +22,26 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
 
         public abstract Task Sort();
 
-        protected async Task ReportSelectedDelayed(int firstIndex, int secondIndex)
+        protected async Task MarkElements(int firstIndex, int secondIndex)
         {
-            ReportSelected(firstIndex, secondIndex);
-            await PassDelay();
+            Mark?.Invoke(firstIndex, secondIndex);
+            await Delay();
         }
-        
-        protected void ReportSelected(int firstIndex, int secondIndex) => 
-            Select?.Invoke(firstIndex, secondIndex);
 
-        protected async Task PassDelay() => 
+        protected async Task SwapElements(int firstIndex, int secondIndex)
+        {
+            (_data[firstIndex], _data[secondIndex]) = (_data[secondIndex], _data[firstIndex]);
+            Swap?.Invoke(firstIndex, secondIndex);
+            await Delay();
+        }
+
+        protected async Task Delay() => 
             await Task.Delay(_delay.Value, _cancellationToken);
 
-        protected void SwapElements(int firstIndex, int secondIndex)
+        protected async Task MarkAndSwap(int firstIndex, int secondIndex)
         {
-            int temp = _data[firstIndex];
-
-            _data[firstIndex] = _data[secondIndex];
-            _data[secondIndex] = temp;
-            
-            Swap?.Invoke(firstIndex, secondIndex);
+            await MarkElements(firstIndex, secondIndex);
+            await SwapElements(firstIndex, secondIndex);
         }
     }
 }

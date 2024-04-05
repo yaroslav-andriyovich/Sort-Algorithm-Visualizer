@@ -12,14 +12,16 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
         private readonly Button _resetButton;
         private readonly Button _startButton;
         private readonly NumericUpDown _arraySizeChanger;
+        private readonly PictureBox _chartColorPickBox;
 
         public StopFeature(Button stopButton, 
             SortingController sortingController,
             SortTypeSelector sortTypeSelector, 
             Button resetButton, 
             Button startButton,
-            NumericUpDown arraySizeChanger
-            )
+            NumericUpDown arraySizeChanger,
+            PictureBox chartColorPickBox
+        )
         {
             _stopButton = stopButton;
             _sortingController = sortingController;
@@ -27,6 +29,7 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
             _resetButton = resetButton;
             _startButton = startButton;
             _arraySizeChanger = arraySizeChanger;
+            _chartColorPickBox = chartColorPickBox;
 
             _stopButton.Click += OnStopButtonClick;
             _sortingController.Finish += HandleSortingFinishInMainThread;
@@ -49,6 +52,7 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
             _resetButton.Enabled = true;
             _startButton.Enabled = true;
             _arraySizeChanger.Enabled = true;
+            _chartColorPickBox.Enabled = true;
         }
     }
 }
