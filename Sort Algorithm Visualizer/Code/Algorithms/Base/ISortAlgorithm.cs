@@ -8,8 +8,16 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
         event SwapCallback Swap;
         Task Sort();
     }
+
+    public enum MarkType
+    {
+        None,
+        Select,
+        Swap,
+        Pivot
+    }
     
-    public delegate void MarkCallback(int firstIndex, int secondIndex);
+    public delegate void MarkCallback(MarkType type, params int[] indexes);
     
     public delegate void SwapCallback(int firstIndex, int secondIndex);
 }

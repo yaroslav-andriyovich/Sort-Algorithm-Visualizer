@@ -11,12 +11,12 @@ namespace Sort_Algorithm_Visualizer.Data
         public NumericDataGenerator() => 
             _random = new Random();
 
-        public int[] Generate(int size, int minValue, int maxValue)
+        public NumericData Generate(int size, int minValue, int maxValue)
         {
             CreateArray(size);
             FillData(size, minValue, maxValue);
             
-            return _data;
+            return new NumericData(_data);
         }
 
         private void CreateArray(int size) => 
@@ -25,9 +25,7 @@ namespace Sort_Algorithm_Visualizer.Data
         private void FillData(int size, int minValue, int maxValue)
         {
             for (int i = 0; i < size; i++)
-            {
                 _data[i] = GetRandomNumber(minValue, maxValue);
-            }
         }
 
         private int GetRandomNumber(int min, int max) => 

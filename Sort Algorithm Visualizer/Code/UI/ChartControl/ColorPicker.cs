@@ -18,23 +18,6 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
             _pickBox.Click += OnPickBoxClick;
         }
 
-        public Color GetPointColor(int dataValue, int maxElementValue)
-        {
-            int red = Color.R;
-            int green = Color.G;
-            int blue = Color.B;
-            
-            float colorIntensity = dataValue / (float)maxElementValue;
-            
-            red = (int)(red * colorIntensity);
-            green = (int)(green * colorIntensity);
-            blue = (int)(blue * colorIntensity);
-            
-            Color color = Color.FromArgb(red, green, blue);
-            
-            return color;
-        }
-
         private void OnPickBoxClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();

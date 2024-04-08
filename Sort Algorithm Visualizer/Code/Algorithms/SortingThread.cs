@@ -42,7 +42,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
             catch (Exception exception)
             {
                 if (!(exception is TaskCanceledException))
-                    Console.WriteLine(exception);
+                    throw;
             }
             
             _backgroundWorker = null;

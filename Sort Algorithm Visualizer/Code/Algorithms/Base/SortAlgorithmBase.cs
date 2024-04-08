@@ -9,9 +9,10 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
         public event MarkCallback Mark;
         public event SwapCallback Swap;
 
-        protected readonly int[] _data;
-        protected readonly Delay _delay;
-        protected readonly CancellationToken _cancellationToken;
+        protected readonly NumericData _data;
+        
+        private readonly Delay _delay;
+        private readonly CancellationToken _cancellationToken;
 
         public SortAlgorithmBase(SortingParameters parameters)
         {
@@ -22,26 +23,26 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
 
         public abstract Task Sort();
 
-        protected async Task MarkElements(int firstIndex, int secondIndex)
+        protected async Task Delay() => 
+            await Task.Delay(_delay.Value, _cancellationToken);
+
+        protected async Task MarkOnce(MarkType type, params int[] indexes)
         {
-            Mark?.Invoke(firstIndex, secondIndex);
+            Mark?.Invoke(type, indexes);
             await Delay();
+            Mark?.Invoke(MarkType.None, indexes);
         }
+
+        protected void MarkPermanentWithoutDelay(MarkType type, params int[] indexes) => 
+            Mark?.Invoke(type, indexes);
 
         protected async Task SwapElements(int firstIndex, int secondIndex)
         {
             (_data[firstIndex], _data[secondIndex]) = (_data[secondIndex], _data[firstIndex]);
+            Mark?.Invoke(MarkType.Swap, firstIndex, secondIndex);
             Swap?.Invoke(firstIndex, secondIndex);
             await Delay();
-        }
-
-        protected async Task Delay() => 
-            await Task.Delay(_delay.Value, _cancellationToken);
-
-        protected async Task MarkAndSwap(int firstIndex, int secondIndex)
-        {
-            await MarkElements(firstIndex, secondIndex);
-            await SwapElements(firstIndex, secondIndex);
+            Mark?.Invoke(MarkType.None, firstIndex, secondIndex);
         }
     }
 }

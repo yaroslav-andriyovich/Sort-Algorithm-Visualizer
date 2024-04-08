@@ -19,14 +19,16 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
                 for (int j = i + 1; j < _data.Length; j++)
                 {
-                    await MarkElements(minNumIndex, j);
+                    await MarkOnce(MarkType.Select, minNumIndex, j);
                 
                     if (_data[j] < _data[minNumIndex])
                         minNumIndex = j;
                 }
 
                 if (minNumIndex != i)
-                    await MarkAndSwap(minNumIndex, i);
+                    await SwapElements(minNumIndex, i);
+                
+                MarkPermanentWithoutDelay(MarkType.Pivot, i);
             }
         }
     }
