@@ -63,10 +63,12 @@
     <Compile Include="Code\Data\SortingParameters.cs" />
     <Compile Include="Code\Data\Delay.cs" />
     <Compile Include="Code\Data\NumericDataGenerator.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartCleaner.cs" />
+    <Compile Include="Code\UI\ChartControl\ChartInitializer.cs" />
     <Compile Include="Code\UI\ChartControl\Points\MarkedPoint.cs" />
     <Compile Include="Code\UI\ChartControl\Points\PointMarker.cs" />
     <Compile Include="Code\UI\ChartControl\Points\PointPainter.cs" />
-    <Compile Include="Code\UI\ChartControl\Points\PointSwapper.cs" />
+    <Compile Include="Code\UI\ChartControl\Points\DataChangeHandler.cs" />
     <Compile Include="Code\UI\SortControls\ArraySizeChanger.cs" />
     <Compile Include="Code\UI\SortControls\ResetFeature.cs" />
     <Compile Include="Code\UI\SortControls\SortDelayChanger.cs" />

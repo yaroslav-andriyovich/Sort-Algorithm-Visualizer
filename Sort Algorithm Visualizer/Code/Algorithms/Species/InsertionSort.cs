@@ -13,15 +13,15 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
         public override async Task Sort()
         {
-            for (int i = 1; i < _data.Length; i++)
+            for (int i = 1; i < data.Length; i++)
             {
                 int minNumIndex = i;
                 
-                while (minNumIndex > 0 && minNumIndex < _data.Length)
+                while (minNumIndex > 0 && minNumIndex < data.Length)
                 {
                     await MarkOnce(MarkType.Select, minNumIndex, minNumIndex - 1);
 
-                    if (_data[minNumIndex] < _data[minNumIndex - 1])
+                    if (data[minNumIndex] < data[minNumIndex - 1])
                     {
                         await SwapElements(minNumIndex, minNumIndex - 1);
                         MarkPermanentWithoutDelay(MarkType.Pivot, i);

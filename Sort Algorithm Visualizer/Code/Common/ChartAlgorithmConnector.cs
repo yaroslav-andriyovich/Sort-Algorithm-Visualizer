@@ -6,6 +6,8 @@ namespace Sort_Algorithm_Visualizer.Common
 {
     public class ChartAlgorithmConnector
     {
+        private const int MinDataValue = 1;
+        
         private readonly ChartView _chartView;
         private readonly SortingController _sortingController;
         private readonly NumericDataGenerator _dataGenerator;
@@ -19,21 +21,17 @@ namespace Sort_Algorithm_Visualizer.Common
             _dataGenerator = dataGenerator;
 
             _sortingController.Mark += _chartView.MarkPointsInMainThread;
-            _sortingController.Swap += _chartView.SwapPointsInMainThread;
             _sortingController.Finish += _chartView.HandleStopSortingInMainThread;
         }
 
         public void InitializeNewData(int size)
         {
-            const int minValue = 1;
-            int maxValue = _chartView.MaxElementValue;
-
             if (_numericData != null)
                 _numericData.Change -= _chartView.HandleDataChange;
 
-            _numericData = _dataGenerator.Generate(size, minValue, maxValue);
+            _numericData = _dataGenerator.Generate(size, MinDataValue, _chartView.MaxElementValue);
             _sortingController.SetData(_numericData);
-            _chartView.InitializeGraph(new ReadonlyNumericData(_numericData));
+            _chartView.Initialize(new ReadonlyNumericData(_numericData));
             _numericData.Change += _chartView.HandleDataChange;
         }
     }

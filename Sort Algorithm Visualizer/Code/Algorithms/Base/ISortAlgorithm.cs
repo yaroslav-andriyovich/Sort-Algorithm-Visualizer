@@ -5,7 +5,6 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
     public interface ISortAlgorithm
     {
         event MarkCallback Mark;
-        event SwapCallback Swap;
         Task Sort();
     }
 
@@ -13,11 +12,10 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
     {
         None,
         Select,
+        Select2,
         Swap,
         Pivot
     }
     
     public delegate void MarkCallback(MarkType type, params int[] indexes);
-    
-    public delegate void SwapCallback(int firstIndex, int secondIndex);
 }

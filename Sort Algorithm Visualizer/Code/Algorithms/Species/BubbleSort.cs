@@ -13,9 +13,9 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
         
         public override async Task Sort()
         {
-            for (int i = 0; i < _data.Length - 1; i++)
+            for (int i = 0; i < data.Length - 1; i++)
             {
-                int lastHighest = _data.Length - i - 1;
+                int lastHighest = data.Length - i - 1;
                 
                 for (int j = 0; j < lastHighest; j++)
                 {
@@ -24,7 +24,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
                     
                     await MarkOnce(MarkType.Select, currentIndex, nextIndex);
 
-                    if (_data[currentIndex] > _data[nextIndex])
+                    if (data[currentIndex] > data[nextIndex])
                         await SwapElements(currentIndex, nextIndex);
                 }
                 

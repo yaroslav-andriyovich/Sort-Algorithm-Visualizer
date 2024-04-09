@@ -8,7 +8,6 @@ namespace Sort_Algorithm_Visualizer.Algorithms
     public class SortingController
     {
         public event MarkCallback Mark;
-        public event SwapCallback Swap;
         public event Action Finish;
         public bool IsRunning => _thread.IsRunning;
 
@@ -67,9 +66,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         private void CreateAlgorithm(SortAlgorithmType sortingType, SortingParameters parameters)
         {
             _algorithm = _algorithmFactory.Create(sortingType, parameters);
-            
             _algorithm.Mark += Mark;
-            _algorithm.Swap += Swap;
         }
         
         private void OnAlgorithmStop()
@@ -81,8 +78,6 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         private void DestroyAlgorithm()
         {
             _algorithm.Mark -= Mark;
-            _algorithm.Swap -= Swap;
-            
             _algorithm = null;
         }
     }

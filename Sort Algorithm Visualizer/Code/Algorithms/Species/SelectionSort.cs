@@ -13,15 +13,15 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
         public override async Task Sort()
         {
-            for (int i = 0; i < _data.Length - 1; i++)
+            for (int i = 0; i < data.Length - 1; i++)
             {
                 int minNumIndex = i;
 
-                for (int j = i + 1; j < _data.Length; j++)
+                for (int j = i + 1; j < data.Length; j++)
                 {
                     await MarkOnce(MarkType.Select, minNumIndex, j);
                 
-                    if (_data[j] < _data[minNumIndex])
+                    if (data[j] < data[minNumIndex])
                         minNumIndex = j;
                 }
 

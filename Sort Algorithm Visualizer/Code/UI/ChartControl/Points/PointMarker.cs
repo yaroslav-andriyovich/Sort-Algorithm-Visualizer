@@ -11,55 +11,34 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
         private static readonly Color SelectColor = Color.FromArgb(255, 50, 50);
         private static readonly Color SwapColor = Color.DarkOrange;
         private static readonly Color PivotColor = Color.LawnGreen;
+        private static readonly Color Select2Color = Color.Aqua;
         
-        private readonly DataPointCollection _points;
+        private readonly DataPointCollection _chartPoints;
         private readonly PointPainter _pointPainter;
         private readonly Dictionary<int, MarkedPoint> _markedPoints;
         
         private MarkedPoint _pivotPoint;
 
-        public PointMarker(DataPointCollection points, PointPainter pointPainter)
+        public PointMarker(DataPointCollection chartPoints, PointPainter pointPainter)
         {
-            _points = points;
+            _chartPoints = chartPoints;
             _pointPainter = pointPainter;
             _markedPoints = new Dictionary<int, MarkedPoint>();
         }
 
-        public bool IsPointMarkedAt(int index) => 
+        public bool IsPointMarked(int index) => 
             _markedPoints.ContainsKey(index);
 
-        public void MarkPoints(MarkType type, params int[] indexes)
+        public void Mark(MarkType type, params int[] indexes)
         {
-            MarkAction markAction;
-            
-            switch (type)
-            {
-                case MarkType.None:
-                    markAction = UnmarkPoint;
-                    break;
-                case MarkType.Select:
-                    markAction = MarkAsSelect;
-                    break;
-                case MarkType.Swap:
-                    markAction = MarkAsSwap;
-                    break;
-                case MarkType.Pivot:
-                    markAction = MarkAsPivot;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            MarkAction markAction = GetMarkAction(type);
             
             foreach (int index in indexes)
             {
-                DataPoint point = _points[index];
                 MarkedPoint markedPoint;
 
-                if (!_markedPoints.ContainsKey(index))
-                {
-                    markedPoint = new MarkedPoint(point, index);
-                    _markedPoints.Add(index, markedPoint);
-                }
+                if (!IsPointMarked(index))
+                    markedPoint = RegisterPoint(_chartPoints[index], index);
                 else
                     markedPoint = _markedPoints[index];
 
@@ -70,26 +49,38 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
         public void UnmarkAll()
         {
             foreach (MarkedPoint markedPoint in _markedPoints.Values) 
-                //markedPoint.RestoreOriginalColor();
                 _pointPainter.Paint(markedPoint.point);
             
             _pivotPoint = null;
             _markedPoints.Clear();
         }
 
-        /*public void Swap(int firstIndex, int secondIndex)
+        private MarkAction GetMarkAction(MarkType type)
         {
-            if (_markedPoints.ContainsKey(firstIndex) && _markedPoints.ContainsKey(secondIndex))
+            switch (type)
             {
-                MarkedPoint first = _markedPoints[firstIndex];
-                MarkedPoint second = _markedPoints[secondIndex];
-
-                (_markedPoints[firstIndex], _markedPoints[secondIndex]) = (_markedPoints[secondIndex], _markedPoints[firstIndex]);
-                (first.index, second.index) = (second.index, first.index);
-                (first.originalColor, second.originalColor) = (second.originalColor, first.originalColor);
+                case MarkType.None:
+                    return UnmarkPoint;
+                case MarkType.Select:
+                    return MarkAsSelect;
+                case MarkType.Select2:
+                    return MarkAsSelect2;
+                case MarkType.Swap:
+                    return MarkAsSwap;
+                case MarkType.Pivot:
+                    return MarkAsPivot;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-        }*/
-        
+        }
+
+        private MarkedPoint RegisterPoint(DataPoint point, int index)
+        {
+            MarkedPoint markedPoint = new MarkedPoint(point, index);
+            _markedPoints.Add(index, markedPoint);
+            return markedPoint;
+        }
+
         private void UnmarkPoint(MarkedPoint markedPoint)
         {
             _pointPainter.Paint(markedPoint.point);
@@ -102,6 +93,9 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
 
         private void MarkAsSelect(MarkedPoint markedPoint) => 
             _pointPainter.Paint(markedPoint.point, SelectColor);
+
+        private void MarkAsSelect2(MarkedPoint markedPoint) => 
+            _pointPainter.Paint(markedPoint.point, Select2Color);
 
         private void MarkAsSwap(MarkedPoint markedPoint) => 
             _pointPainter.Paint(markedPoint.point, SwapColor);

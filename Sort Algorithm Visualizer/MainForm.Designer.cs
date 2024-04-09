@@ -223,7 +223,7 @@ namespace Sort_Algorithm_Visualizer
             this.delayChanger.Size = new System.Drawing.Size(60, 20);
             this.delayChanger.TabIndex = 16;
             this.delayChanger.Value = new decimal(new int[] {
-            200,
+            25,
             0,
             0,
             0});
@@ -304,6 +304,7 @@ namespace Sort_Algorithm_Visualizer
             this.Controls.Add(this.chart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sort Algorhitm Visualizer";
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);

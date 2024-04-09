@@ -13,7 +13,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
             : base(parameters)
         {
             _low = 0;
-            _high = _data.Length - 1;
+            _high = data.Length - 1;
         }
 
         public override async Task Sort() => 
@@ -32,27 +32,27 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
         
         private async Task<int> Partition(int low, int high)
         {
-            int pivot = _data[high];
+            int pivot = data[high];
             int i = low - 1;
 
             for (int j = low; j < high; j++)
             {
                 MarkPermanentWithoutDelay(MarkType.Pivot, high);
 
-                if (_data[j] < pivot)
+                if (data[j] < pivot)
                 {
                     i++;
 
                     await MarkOnce(MarkType.Select, i, j);
                     
-                    if (_data[i] != _data[j])
+                    if (data[i] != data[j])
                         await SwapElements(i, j);
                 }
             }
             
             await MarkOnce(MarkType.Select, i + 1, high);
             
-            if (_data[i + 1] != pivot)
+            if (data[i + 1] != pivot)
                 await SwapElements(i + 1, high);
 
             return i + 1;
