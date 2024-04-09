@@ -18,16 +18,16 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
         }
         
         public override async Task Sort() => 
-            await MergeSortHelper(_low, _high);
+            await Sort(_low, _high);
 
-        private async Task MergeSortHelper(int low, int high)
+        private async Task Sort(int low, int high)
         {
             if (low < high)
             {
                 int mid = low + (high - low) / 2;
             
-                await MergeSortHelper(low, mid);
-                await MergeSortHelper(mid + 1, high);
+                await Sort(low, mid);
+                await Sort(mid + 1, high);
             
                 await Merge(low, mid, high);
             }

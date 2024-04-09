@@ -34,8 +34,15 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Base
 
         protected void MarkPermanentWithoutDelay(MarkType type, params int[] indexes) => 
             Mark?.Invoke(type, indexes);
+        
+        protected async Task MarkAsSelectAndSwap(int firstIndex, int secondIndex)
+        {
+            await MarkOnce(MarkType.Select, firstIndex, secondIndex);
+            (data[firstIndex], data[secondIndex]) = (data[secondIndex], data[firstIndex]);
+            await MarkOnce(MarkType.Swap, firstIndex, secondIndex);
+        }
 
-        protected async Task SwapElements(int firstIndex, int secondIndex)
+        protected async Task Swap(int firstIndex, int secondIndex)
         {
             (data[firstIndex], data[secondIndex]) = (data[secondIndex], data[firstIndex]);
             await MarkOnce(MarkType.Swap, firstIndex, secondIndex);

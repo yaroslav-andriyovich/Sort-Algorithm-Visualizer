@@ -23,7 +23,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
 
                     if (data[minNumIndex] < data[minNumIndex - 1])
                     {
-                        await SwapElements(minNumIndex, minNumIndex - 1);
+                        await Swap(minNumIndex, minNumIndex - 1);
                         MarkPermanentWithoutDelay(MarkType.Pivot, i);
                         minNumIndex--;
                     }

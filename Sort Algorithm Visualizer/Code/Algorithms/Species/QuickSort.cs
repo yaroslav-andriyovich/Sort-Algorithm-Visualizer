@@ -46,14 +46,14 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
                     await MarkOnce(MarkType.Select, i, j);
                     
                     if (data[i] != data[j])
-                        await SwapElements(i, j);
+                        await Swap(i, j);
                 }
             }
             
             await MarkOnce(MarkType.Select, i + 1, high);
             
             if (data[i + 1] != pivot)
-                await SwapElements(i + 1, high);
+                await Swap(i + 1, high);
 
             return i + 1;
         }

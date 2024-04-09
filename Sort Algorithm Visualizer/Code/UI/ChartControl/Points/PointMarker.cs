@@ -9,10 +9,10 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
     public class PointMarker
     {
         private static readonly Color SelectColor = Color.FromArgb(255, 50, 50);
+        private static readonly Color Select2Color = Color.Aqua;
         private static readonly Color SwapColor = Color.DarkOrange;
         private static readonly Color PivotColor = Color.LawnGreen;
-        private static readonly Color Select2Color = Color.Aqua;
-        
+
         private readonly DataPointCollection _chartPoints;
         private readonly PointPainter _pointPainter;
         private readonly Dictionary<int, MarkedPoint> _markedPoints;

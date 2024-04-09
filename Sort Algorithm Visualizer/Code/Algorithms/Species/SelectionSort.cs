@@ -26,7 +26,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
                 }
 
                 if (minNumIndex != i)
-                    await SwapElements(minNumIndex, i);
+                    await Swap(minNumIndex, i);
                 
                 MarkPermanentWithoutDelay(MarkType.Pivot, i);
             }

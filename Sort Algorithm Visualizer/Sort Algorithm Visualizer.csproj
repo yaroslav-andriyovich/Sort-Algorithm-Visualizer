@@ -53,6 +53,7 @@
     <Compile Include="Code\Algorithms\Base\SortAlgorithmBase.cs" />
     <Compile Include="Code\Algorithms\SortingThread.cs" />
     <Compile Include="Code\Algorithms\Species\BubbleSort.cs" />
+    <Compile Include="Code\Algorithms\Species\HeapSort.cs" />
     <Compile Include="Code\Algorithms\Species\InsertionSort.cs" />
     <Compile Include="Code\Algorithms\Species\MergeSort.cs" />
     <Compile Include="Code\Algorithms\Species\QuickSort.cs" />

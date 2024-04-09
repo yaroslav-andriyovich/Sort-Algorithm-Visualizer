@@ -25,7 +25,7 @@ namespace Sort_Algorithm_Visualizer.Algorithms.Species
                     await MarkOnce(MarkType.Select, currentIndex, nextIndex);
 
                     if (data[currentIndex] > data[nextIndex])
-                        await SwapElements(currentIndex, nextIndex);
+                        await Swap(currentIndex, nextIndex);
                 }
                 
                 MarkPermanentWithoutDelay(MarkType.Pivot, lastHighest);
