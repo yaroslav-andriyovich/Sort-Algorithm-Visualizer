@@ -7,12 +7,14 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
         private readonly DataPointCollection _points;
         private readonly PointMarker _pointMarker;
         private readonly PointPainter _pointPainter;
+        private readonly PointLabelController _labelController;
 
-        public DataChangeHandler(DataPointCollection points, PointMarker pointMarker, PointPainter pointPainter)
+        public DataChangeHandler(DataPointCollection points, PointMarker pointMarker, PointPainter pointPainter, PointLabelController labelController)
         {
             _points = points;
             _pointMarker = pointMarker;
             _pointPainter = pointPainter;
+            _labelController = labelController;
         }
 
         public void Handle(int index, int value)
@@ -23,6 +25,8 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl.Points
 
             if (!_pointMarker.IsPointMarked(index))
                 _pointPainter.Paint(changedPoint);
+            
+            _labelController.Update(changedPoint);
         }
     }
 }

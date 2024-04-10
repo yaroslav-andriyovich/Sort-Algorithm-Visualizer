@@ -44,7 +44,7 @@ namespace Sort_Algorithm_Visualizer.UI.SortControls
         }
 
         private void HandleSortingFinishInMainThread() => 
-            _resetButton.Invoke(new Action(EnableButtons));
+            _stopButton.Invoke(new Action(EnableButtons));
 
         private void EnableButtons()
         {

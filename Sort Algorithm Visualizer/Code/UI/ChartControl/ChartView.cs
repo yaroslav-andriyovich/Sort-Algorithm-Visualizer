@@ -17,6 +17,7 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
         private readonly ColorPicker _colorPicker;
         private readonly ChartStyleSwitcher _styleSwitcher;
         private readonly PointPainter _pointPainter;
+        private readonly PointLabelController _labelController;
         private readonly PointMarker _pointMarker;
         private readonly DataChangeHandler _dataChangeHandler;
         private readonly ChartCleaner _cleaner;
@@ -26,18 +27,19 @@ namespace Sort_Algorithm_Visualizer.UI.ChartControl
         private readonly MarkCallback _markCallback;
         private readonly Action _finishSortingCallback;
 
-        public ChartView(Chart chart, Button toggle3DButton, PictureBox colorPickBox)
+        public ChartView(Chart chart, ColorPicker colorPicker, Button toggle3DButton, Button togglePointLabelsButton)
         {
             _chart = chart;
+            _colorPicker = colorPicker;
             _points = _chart.Series[0].Points;
-            
-            _colorPicker = new ColorPicker(colorPickBox);
+
             _styleSwitcher = new ChartStyleSwitcher(chart, toggle3DButton);
             _pointPainter = new PointPainter();
+            _labelController = new PointLabelController(_points, togglePointLabelsButton);
             _pointMarker = new PointMarker(_points, _pointPainter);
-            _dataChangeHandler = new DataChangeHandler(_points, _pointMarker, _pointPainter);
+            _dataChangeHandler = new DataChangeHandler(_points, _pointMarker, _pointPainter, _labelController);
             _cleaner = new ChartCleaner(_points, _pointMarker);
-            _initializer = new ChartInitializer(_points, _cleaner, _pointPainter);
+            _initializer = new ChartInitializer(_points, _cleaner, _pointPainter, _labelController);
 
             _dataChangeCallback = _dataChangeHandler.Handle;
             _markCallback = _pointMarker.Mark;

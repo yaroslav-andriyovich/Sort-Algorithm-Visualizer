@@ -19,11 +19,11 @@ namespace Sort_Algorithm_Visualizer.Algorithms
         private CancellationTokenSource _cancellationTokenSource;
         private ISortAlgorithm _algorithm;
 
-        public SortingController(Delay delay)
+        public SortingController(Delay delay, AlgorithmFactory algorithmFactory, SortingThread sortingThread)
         {
             _delay = delay;
-            _algorithmFactory = new AlgorithmFactory();
-            _thread = new SortingThread();
+            _algorithmFactory = algorithmFactory;
+            _thread = sortingThread;
             _thread.StopEvent += OnAlgorithmStop;
         }
 

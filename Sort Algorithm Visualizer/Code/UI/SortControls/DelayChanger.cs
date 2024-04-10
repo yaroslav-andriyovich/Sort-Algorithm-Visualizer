@@ -4,12 +4,12 @@ using Sort_Algorithm_Visualizer.Data;
 
 namespace Sort_Algorithm_Visualizer.UI.SortControls
 {
-    public class SortDelayChanger
+    public class DelayChanger
     {
         private readonly NumericUpDown _numericUpDown;
         private readonly Delay _delay;
 
-        public SortDelayChanger(NumericUpDown numericUpDown, Delay delay)
+        public DelayChanger(NumericUpDown numericUpDown, Delay delay)
         {
             _numericUpDown = numericUpDown;
             _delay = delay;

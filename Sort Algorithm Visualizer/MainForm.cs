@@ -9,29 +9,58 @@ namespace Sort_Algorithm_Visualizer
 {
     public partial class MainForm : Form
     {
-        private readonly Delay _delay;
-        private readonly SortDelayChanger _sortDelayChanger;
-        private readonly ArraySizeChanger _arraySizeChanger;
-        private readonly SortingController _sortingController;
-        private readonly ChartView _chartView;
-        private readonly ChartAlgorithmConnector _chartAlgorithmConnector;
-        private readonly ResetFeature _resetFeature;
-        private readonly SortTypeSelector _sortTypeSelector;
-        private readonly StartFeature _startFeature;
-        private readonly StopFeature _stopFeature;
+        private Delay _delay;
+        private DelayChanger _delayChanger;
+        private ArraySizeChanger _arraySizeChanger;
+        private SortingController _sortingController;
+        private ChartView _chartView;
+        private ChartAlgorithmConnector _chartAlgorithmConnector;
+        private SortTypeSelector _sortTypeSelector;
+        private ResetFeature _resetFeature;
+        private StartFeature _startFeature;
+        private StopFeature _stopFeature;
 
         public MainForm()
         {
             InitializeComponent();
+            Compose();
+        }
 
+        private void Compose()
+        {
+            RegisterDelay();
+            RegisterArraySizeChanger();
+            RegisterSortController();
+            RegisterChart();
+            RegisterChartAlgorithmConnection();
+            RegisterSortTypeSelector();
+            RegisterUserFeatures();
+        }
+
+        private void RegisterDelay()
+        {
             _delay = new Delay();
-            _sortDelayChanger = new SortDelayChanger(delayChanger, _delay);
+            _delayChanger = new DelayChanger(delayChanger, _delay);
+        }
+
+        private void RegisterArraySizeChanger() => 
             _arraySizeChanger = new ArraySizeChanger(arraySizeChanger);
-            _sortingController = new SortingController(_delay);
-            _chartView = new ChartView(chart, toggle3DButton, colorPickBox);
+
+        private void RegisterSortController() => 
+            _sortingController = new SortingController(_delay, new AlgorithmFactory(), new SortingThread());
+
+        private void RegisterChart() => 
+            _chartView = new ChartView(chart, new ColorPicker(colorPickBox), toggle3DButton, togglePointLabelsButton);
+
+        private void RegisterChartAlgorithmConnection() => 
             _chartAlgorithmConnector = new ChartAlgorithmConnector(_chartView, _sortingController, new NumericDataGenerator());
-            _resetFeature = new ResetFeature(resetButton, startButton, _chartAlgorithmConnector, _sortingController, _arraySizeChanger);
+
+        private void RegisterSortTypeSelector() => 
             _sortTypeSelector = new SortTypeSelector(comboBox);
+
+        private void RegisterUserFeatures()
+        {
+            _resetFeature = new ResetFeature(resetButton, startButton, _chartAlgorithmConnector, _sortingController, _arraySizeChanger);
             _startFeature = new StartFeature(startButton, _sortingController, _sortTypeSelector, resetButton, arraySizeChanger, colorPickBox);
             _stopFeature = new StopFeature(stopButton, _sortingController, _sortTypeSelector, resetButton, startButton, arraySizeChanger, colorPickBox);
         }
